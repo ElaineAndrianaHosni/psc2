@@ -84,14 +84,15 @@ public class Minesweeper {
             // untuk sisa populasi generasi baru
             s = POPULATION_SIZE - s;
             for (int i = 0; i < s; i++) {
-                Random rand = new Random();
-                rand.setSeed(2000);
+//                Random rand = new Random();
+//          
+//                rand.setSeed(2000);
                 // melakukan random angka untuk persilangan antara 50 individu terbaik
-                int r = rand.nextInt(50);
+                int randomInt = ms.r.nextInt(50);
                 // mengambil orang tua pertama
-                Individual parent1 = population.get(r);
-                r = rand.nextInt(50);
-                Individual parent2 = population.get(r);
+                Individual parent1 = population.get(randomInt);
+                randomInt = ms.r.nextInt(50);
+                Individual parent2 = population.get(randomInt);
                 // melakukan persilangan untuk menghasilkan generasi baru
                 new_generation.add(parent1.mate(parent2));
             }
