@@ -16,13 +16,15 @@ public class Individual implements Comparable<Individual>{
     private boolean[][] chromosome;
     private int fitnes;
     private char[][] target;
+    private Random r;
     
     //setter dan getter dan constructor
-    public Individual(boolean[][] chromosome, char[][] target) {
+    public Individual(boolean[][] chromosome, char[][] target,Random r) {
         this.chromosome = chromosome;
         this.target = target;
         //buat langsung itung fitness per individu
         this.fitnes=callFitnes();
+        this.r=r;
     }
     //method persilangan antara 2 individu menjadi individu baru
     public Individual mate(Individual parent2) {
@@ -30,7 +32,6 @@ public class Individual implements Comparable<Individual>{
         boolean[][] child_chromosome = new boolean[this.chromosome.length][this.chromosome[0].length];
         for (int i = 0; i < child_chromosome.length; i++) {
             for (int j = 0; j < child_chromosome[i].length; j++) {
-                Random r = new Random();
                 //random 100 angka spy itungannya 100%
                 int rand = r.nextInt(100);
                 // jika hasil random kurang dari 45 mewarisi chromosome parent1
@@ -45,7 +46,7 @@ public class Individual implements Comparable<Individual>{
 
             }
         }
-        return new Individual( child_chromosome,this.target);
+        return new Individual( child_chromosome,this.target,this.r);
     }
 
     public boolean[][] getChromosome() {

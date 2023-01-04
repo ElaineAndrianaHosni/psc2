@@ -12,7 +12,13 @@ import java.util.*;
  * @author ELAINE
  */
 public class Minesweeper {
+    private Random r ;
 
+    public Minesweeper(long seed) {
+        r = new Random();
+        r.setSeed(seed);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -28,13 +34,12 @@ public class Minesweeper {
     //random isi kromosom 
      //kromoson = seluruh puzzle
      //alel = isi sell (kotak yang dipencet/tidak)
-    private static boolean mutated_genes() {
-        Random r = new Random();
+    private boolean mutated_genes() {
         //untuk mengeluarkan true/false secara random
         return r.nextBoolean();
     }
     //method untuk men-generate 1 kromosom 
-    private static boolean[][] create_genome() {
+    private boolean[][] create_genome() {
         //inisialisasi matriks kromosom 
         boolean[][] res = new boolean[target.length][target[0].length];
         //looping sebanyak allel 
@@ -47,6 +52,7 @@ public class Minesweeper {
         return res;
     }
     public static void main(String[] args) {
+        Minesweeper ms= new Minesweeper(0);
        // inisialisasi counter generasi
         int generation = 0;
         // inisialisasi populasi
@@ -55,7 +61,7 @@ public class Minesweeper {
         boolean found = false;
         // inisialisasi populasi awal
         for (int i = 0; i < POPULATION_SIZE; i++) {
-            population.add(new Individual( create_genome(),target));
+            population.add(new Individual( ms.create_genome(),target,ms.r));
         }
         // selama blm ditemukan
         while (!found) {
@@ -79,6 +85,7 @@ public class Minesweeper {
             s = POPULATION_SIZE - s;
             for (int i = 0; i < s; i++) {
                 Random rand = new Random();
+                rand.setSeed(2000);
                 // melakukan random angka untuk persilangan antara 50 individu terbaik
                 int r = rand.nextInt(50);
                 // mengambil orang tua pertama
